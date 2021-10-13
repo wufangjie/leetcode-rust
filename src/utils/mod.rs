@@ -51,7 +51,7 @@ macro_rules! dbgt {
                     file!(),
                     line!(),
                     stringify!($val),
-                    leetcode::utils::type_of(tmp), // $val, &tmp
+                    leetcode_rust::utils::type_of(tmp), // $val, &tmp
                     &tmp
                 );
                 tmp
