@@ -1,189 +1,139 @@
-use leetcode_rust::utils::Stack;
 use std::collections::HashSet;
 
 struct Solution;
 
 impl Solution {
+    fn find_outline_by_outline(
+        is_infected: &Vec<Vec<i32>>,
+        row_wall: &HashSet<(u8, u8)>,
+        col_wall: &HashSet<(u8, u8)>,
+        idx: i32,
+        ij: (u8, u8),
+        visited: &mut Vec<Vec<bool>>, //HashSet<(u8, u8)>,
+    ) -> (HashSet<(u8, u8)>, Vec<(u8, u8)>, Vec<(u8, u8)>) {
+        let height = is_infected.len() as u8;
+        let width = is_infected[0].len() as u8;
+        let mut outline = HashSet::new();
+        let mut row_wall_add = vec![];
+        let mut col_wall_add = vec![];
+        let mut stack = vec![ij];
+        while let Some((i, j)) = stack.pop() {
+            let ii = i as usize;
+            let jj = j as usize;
+            if i > 0 && !row_wall.contains(&(i, j)) {
+                if is_infected[ii - 1][jj] == 0 || is_infected[ii - 1][jj] == idx {
+                    outline.insert((i - 1, j));
+                    row_wall_add.push((i, j));
+                } else if !visited[ii - 1][jj] {
+                    stack.push((i - 1, j));
+                }
+                visited[ii - 1][jj] = true;
+            }
+            if i < height - 1 && !row_wall.contains(&(i + 1, j)) {
+                if is_infected[ii + 1][jj] == 0 || is_infected[ii + 1][jj] == idx {
+                    outline.insert((i + 1, j));
+                    row_wall_add.push((i + 1, j));
+                } else if !visited[ii + 1][jj] {
+                    stack.push((i + 1, j));
+                }
+                visited[ii + 1][jj] = true;
+            }
+            if j > 0 && !col_wall.contains(&(i, j)) {
+                if is_infected[ii][jj - 1] == 0 || is_infected[ii][jj - 1] == idx {
+                    outline.insert((i, j - 1));
+                    col_wall_add.push((i, j));
+                } else if !visited[ii][jj - 1] {
+                    stack.push((i, j - 1));
+                }
+                visited[ii][jj - 1] = true;
+            }
+            if j < width - 1 && !col_wall.contains(&(i, j + 1)) {
+                if is_infected[ii][jj + 1] == 0 || is_infected[ii][jj + 1] == idx {
+                    outline.insert((i, j + 1));
+                    col_wall_add.push((i, j + 1));
+                } else if !visited[ii][jj + 1] {
+                    stack.push((i, j + 1));
+                }
+                visited[ii][jj + 1] = true;
+            }
+        }
+        (outline, row_wall_add, col_wall_add)
+    }
+
     pub fn contain_virus(mut is_infected: Vec<Vec<i32>>) -> i32 {
         let height = is_infected.len();
         if height == 0 {
             return 0;
         }
         let width = is_infected[0].len();
-        //let mut is_infected_mut = is_infected.clone();
 
         let mut row_wall = HashSet::new();
         let mut col_wall = HashSet::new();
-
-        let mut count_wall = 0;
-        let mut part = HashSet::new();
+        let mut ret = 0;
+        let mut idx = 2;
 
         loop {
-            let mut visited: HashSet<(usize, usize)> = HashSet::new();
-            let mut threats: Vec<HashSet<(usize, usize)>> = Vec::new();
-            let mut best_v = 0;
-            let mut best_i = 0;
-            let mut best_p = (0, 0);
-            let mut part_i = 0;
+            let mut n_max = 0;
+            let mut outline_i = HashSet::new();
+            let mut row_wall_add_i = vec![];
+            let mut col_wall_add_i = vec![];
+            let mut visited = vec![vec![false; width]; height];
 
-            let mut best_row_wall_add = HashSet::new();
-            let mut best_col_wall_add = HashSet::new();
+            for i in 0..height {
+                for j in 0..width {
+                    let ij = (i as u8, j as u8);
+                    if is_infected[i][j] != idx - 1 || visited[i][j] {
+                        continue;
+                    }
+                    visited[i][j] = true;
 
-            let mut to_remove = Vec::new();
+                    let (outline, row_wall_add, col_wall_add) = Self::find_outline_by_outline(
+                        &is_infected,
+                        &row_wall,
+                        &col_wall,
+                        idx,
+                        ij,
+                        &mut visited,
+                    );
+                    let n = outline.len();
 
-            if part.len() == 0 {
-                for i in 0..height {
-                    for j in 0..width {
-                        if is_infected[i][j] == 1 && !visited.contains(&(i, j)) {
-                            let mut threat = HashSet::new();
-                            let mut row_wall_add = HashSet::new();
-                            let mut col_wall_add = HashSet::new();
-                            part.insert((i, j));
-
-                            dfs(
-                                &is_infected,
-                                &mut visited,
-                                &row_wall,
-                                &col_wall,
-                                &mut threat,
-                                &mut row_wall_add,
-                                &mut col_wall_add,
-                                i,
-                                j,
-                            );
-                            if threat.len() > best_v {
-                                best_v = threat.len();
-                                best_i = part_i;
-                                best_p = (i, j);
-                                best_row_wall_add = row_wall_add;
-                                best_col_wall_add = col_wall_add;
-                            }
-                            part_i += 1;
-                            threats.push(threat);
+                    if n > n_max {
+                        n_max = n;
+                        row_wall_add_i = row_wall_add;
+                        col_wall_add_i = col_wall_add;
+                        for (x, y) in outline_i {
+                            is_infected[x as usize][y as usize] = idx;
+                        }
+                        outline_i = outline;
+                    } else {
+                        for (x, y) in outline {
+                            is_infected[x as usize][y as usize] = idx;
                         }
                     }
                 }
-                if part_i > 0 {
-                    part.remove(&best_p);
-                }
-            } else {
-                // redundance
-                for temp in part.iter() {
-                    let i = temp.0;
-                    let j = temp.1;
-                    let mut threat = HashSet::new();
-                    let mut row_wall_add = HashSet::new();
-                    let mut col_wall_add = HashSet::new();
-
-                    dfs(
-                        &is_infected,
-                        &mut visited,
-                        &row_wall,
-                        &col_wall,
-                        &mut threat,
-                        &mut row_wall_add,
-                        &mut col_wall_add,
-                        i,
-                        j,
-                    );
-                    if threat.len() > best_v {
-                        best_v = threat.len();
-                        best_i = part_i;
-                        best_p = (i, j);
-                        best_row_wall_add = row_wall_add;
-                        best_col_wall_add = col_wall_add;
-                    } else if threat.len() == 0 {
-                        to_remove.push((i, j));
-                    }
-                    part_i += 1;
-                    threats.push(threat);
-                }
-                if part_i > 0 {
-                    part.remove(&best_p);
-                }
-                for p in to_remove {
-                    part.remove(&p);
-                }
             }
 
-            count_wall += best_row_wall_add.len() + best_col_wall_add.len();
-
-            if part.len() == 0 {
-                break;
+            if n_max == 0 {
+                return ret as i32;
             }
-            for (i, j) in best_row_wall_add {
-                row_wall.insert((i, j));
+            idx += 1;
+            ret += row_wall_add_i.len() + col_wall_add_i.len();
+            // println!("{}", ret);
+            // for row in &is_infected {
+            //     println!("{:?}", row);
+            // }
+            for xy in row_wall_add_i {
+                row_wall.insert(xy);
             }
-            for (i, j) in best_col_wall_add {
-                col_wall.insert((i, j));
-            }
-            for k in 0..threats.len() {
-                if k != best_i {
-                    for pairs in threats[k].iter() {
-                        is_infected[pairs.0][pairs.1] = 1;
-                    }
-                }
-            }
-        }
-        count_wall as i32
-    }
-}
-
-fn dfs(
-    is_infected: &Vec<Vec<i32>>,
-    visited: &mut HashSet<(usize, usize)>,
-    row_wall: &HashSet<(usize, usize)>,
-    col_wall: &HashSet<(usize, usize)>,
-    threat: &mut HashSet<(usize, usize)>,
-    row_wall_add: &mut HashSet<(usize, usize)>,
-    col_wall_add: &mut HashSet<(usize, usize)>,
-    i0: usize,
-    j0: usize,
-) {
-    let height = is_infected.len();
-    let width = is_infected[0].len();
-
-    let mut stack = Stack::new();
-    stack.push((i0, j0));
-    while !stack.is_empty() {
-        let temp = stack.pop().unwrap();
-        let i = temp.0;
-        let j = temp.1;
-        if is_infected[i][j] == 0 {
-            threat.insert((i, j));
-        } else if !visited.contains(&(i, j)) {
-            visited.insert((i, j));
-
-            if i > 0 && !row_wall.contains(&(i, j)) {
-                if is_infected[i - 1][j] == 0 {
-                    row_wall_add.insert((i, j));
-                }
-                stack.push((i - 1, j));
-            }
-            if i < height - 1 && !row_wall.contains(&(i + 1, j)) {
-                if is_infected[i + 1][j] == 0 {
-                    row_wall_add.insert((i + 1, j));
-                }
-                stack.push((i + 1, j));
-            }
-            if j > 0 && !col_wall.contains(&(i, j)) {
-                if is_infected[i][j - 1] == 0 {
-                    col_wall_add.insert((i, j));
-                }
-                stack.push((i, j - 1));
-            }
-            if j < width - 1 && !col_wall.contains(&(i, j + 1)) {
-                if is_infected[i][j + 1] == 0 {
-                    col_wall_add.insert((i, j + 1));
-                }
-                stack.push((i, j + 1));
+            for xy in col_wall_add_i {
+                col_wall.insert(xy);
             }
         }
     }
 }
 
 #[test]
-fn test() {
+fn test_749() {
     let is_infected: Vec<Vec<i32>> = vec![
         vec![0, 1, 0, 0, 0, 0, 0, 1],
         vec![0, 1, 0, 0, 0, 0, 0, 1],
@@ -249,4 +199,18 @@ fn test() {
         vec![1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
     ];
     assert_eq!(Solution::contain_virus(is_infected), 205);
+
+    let is_infected: Vec<Vec<i32>> = vec![
+        vec![0, 1, 0, 1, 1, 1, 1, 1, 1, 0],
+        vec![0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+        vec![0, 0, 1, 1, 1, 0, 0, 0, 1, 0],
+        vec![0, 0, 0, 1, 1, 0, 0, 1, 1, 0],
+        vec![0, 1, 0, 0, 1, 0, 1, 1, 0, 1],
+        vec![0, 0, 0, 1, 0, 1, 0, 1, 1, 1],
+        vec![0, 1, 0, 0, 1, 0, 0, 1, 1, 0],
+        vec![0, 1, 0, 1, 0, 0, 0, 1, 1, 0],
+        vec![0, 1, 1, 0, 0, 1, 1, 0, 0, 1],
+        vec![1, 0, 1, 1, 0, 1, 0, 1, 0, 1],
+    ];
+    assert_eq!(Solution::contain_virus(is_infected), 38);
 }
