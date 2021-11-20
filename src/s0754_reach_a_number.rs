@@ -19,9 +19,9 @@ impl Solution {
 }
 
 #[test]
-fn test() {
-    println!("{:?}", Solution::reach_number(1));
-    println!("{:?}", Solution::reach_number(2));
-    println!("{:?}", Solution::reach_number(3));
-    println!("{:?}", Solution::reach_number(-1000000000));
+fn test_754() {
+    assert_eq!(1, Solution::reach_number(1));
+    assert_eq!(3, Solution::reach_number(2));
+    assert_eq!(2, Solution::reach_number(3));
+    assert_eq!(44723, Solution::reach_number(-1000000000));
 }
