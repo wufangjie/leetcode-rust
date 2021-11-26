@@ -1,4 +1,4 @@
-use leetcode_rust::dbgt;
+use utils::dbgt;
 
 mod s0704_binary_search;
 // mod s0705_design_hashset;
