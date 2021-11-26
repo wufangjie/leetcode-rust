@@ -1,11 +1,28 @@
-use leetcode_rust::utils::Stack;
 use std::collections::{HashMap, HashSet};
 
 struct Solution;
 
+use crate::dbgt;
 impl Solution {
-    //pub fn pyramid_transition(bottom: String, allowed: Vec<String>) -> bool {
-    pub fn pyramid_transition(bottom: String, allowed: Vec<&str>) -> bool {
+    fn get_list(// for way 2
+        bottom: &String,
+        i: usize,
+        lst: &mut Vec<char>,
+        ret: &mut Vec<String>,
+        dct: &HashMap<&str, Vec<char>>,
+    ) {
+        if i + 1 == bottom.len() {
+            ret.push(lst.iter().collect::<String>());
+        } else {
+            for ch in dct.get(&bottom[i..i + 2]).as_ref().unwrap().iter() {
+                lst.push(*ch);
+                Self::get_list(bottom, i + 1, lst, ret, dct);
+                lst.pop();
+            }
+        }
+    }
+
+    pub fn pyramid_transition(bottom: String, allowed: Vec<String>) -> bool {
         let mut allowed_map: HashMap<&str, Vec<char>> = HashMap::new();
         for s in allowed.iter() {
             allowed_map
@@ -15,14 +32,8 @@ impl Solution {
         }
 
         let mut cache: HashSet<String> = HashSet::new();
-        let mut bottom = bottom;
-        let mut stack = Stack::new();
-        stack.push(bottom);
-        'main: while !stack.is_empty() {
-            bottom = stack.pop().unwrap();
-            if bottom.len() == 1 {
-                return true;
-            }
+        let mut stack = vec![bottom];
+        'main: while let Some(bottom) = stack.pop() {
             let mut poss: Vec<&Vec<char>> = vec![];
             for i in 0..(bottom.len() - 1) {
                 match allowed_map.get(&bottom[i..i + 2]) {
@@ -30,6 +41,13 @@ impl Solution {
                     None => continue 'main,
                 }
             }
+            if bottom.len() == 2 {
+                return true;
+            }
+
+            // let mut t1 = vec![];
+            // Self::get_list(&bottom, 0, &mut vec![], &mut t1, &allowed_map);
+
             let mut t1: Vec<String> = vec![String::from("")];
             let mut t2: Vec<String> = Vec::new();
             for lst in poss {
@@ -40,9 +58,12 @@ impl Solution {
                         t2.push(new);
                     }
                 }
-                t1 = t2;
-                t2 = Vec::new();
+                // t1 = t2;
+                // t2 = vec![];
+                std::mem::swap(&mut t1, &mut t2);
+                t2.clear();
             }
+
             for p in t1.into_iter() {
                 if !cache.contains(&p) {
                     // NOTE: this cache is important
@@ -56,31 +77,36 @@ impl Solution {
 }
 
 #[test]
-fn test() {
-    //assert!
-    println!(
-        "{:?}",
-        Solution::pyramid_transition(String::from("BCD"), vec!["BCC", "CDE", "CEA", "FFF"])
-    );
+fn test_756() {
+    assert!(Solution::pyramid_transition(
+        String::from("BCD"),
+        vec!["BCC", "CDE", "CEA", "FFF"]
+            .into_iter()
+            .map(|s| s.to_owned())
+            .collect::<Vec<String>>(),
+    ));
     assert!(!Solution::pyramid_transition(
         String::from("AAAA"),
         vec!["AAB", "AAC", "BCD", "BBE", "DEF"]
+            .into_iter()
+            .map(|s| s.to_owned())
+            .collect::<Vec<String>>(),
     ));
 
-    println!(
-        "{:?}",
-        Solution::pyramid_transition(
-            String::from("ABBBBA"),
-            vec![
-                "ACA", "ACF", "ACE", "ACD", "ABA", "ABF", "ABE", "ABD", "FCA", "FCF", "FCE", "FCD",
-                "FBA", "FBF", "FBE", "FBD", "ECA", "ECF", "ECE", "ECD", "EBA", "EBF", "EBE", "EBD",
-                "DCA", "DCF", "DCE", "DCD", "DBA", "DBF", "DBE", "DBD", "CAA", "CAF", "CAE", "CAD",
-                "CFA", "CFF", "CFE", "CFD", "CEA", "CEF", "CEE", "CED", "CDA", "CDF", "CDE", "CDD",
-                "BAA", "BAF", "BAE", "BAD", "BFA", "BFF", "BFE", "BFD", "BEA", "BEF", "BEE", "BED",
-                "BDA", "BDF", "BDE", "BDD", "CCA", "CCF", "CCE", "CCD", "CBA", "CBF", "CBE", "CBD",
-                "BCA", "BCF", "BCE", "BCD", "BBA", "BBF", "BBE", "BBD", "CCC", "CCB", "CBC", "CBB",
-                "BCC", "BCB", "BBC", "BBB"
-            ]
-        )
-    );
+    assert!(!Solution::pyramid_transition(
+        String::from("ABBBBA"),
+        vec![
+            "ACA", "ACF", "ACE", "ACD", "ABA", "ABF", "ABE", "ABD", "FCA", "FCF", "FCE", "FCD",
+            "FBA", "FBF", "FBE", "FBD", "ECA", "ECF", "ECE", "ECD", "EBA", "EBF", "EBE", "EBD",
+            "DCA", "DCF", "DCE", "DCD", "DBA", "DBF", "DBE", "DBD", "CAA", "CAF", "CAE", "CAD",
+            "CFA", "CFF", "CFE", "CFD", "CEA", "CEF", "CEE", "CED", "CDA", "CDF", "CDE", "CDD",
+            "BAA", "BAF", "BAE", "BAD", "BFA", "BFF", "BFE", "BFD", "BEA", "BEF", "BEE", "BED",
+            "BDA", "BDF", "BDE", "BDD", "CCA", "CCF", "CCE", "CCD", "CBA", "CBF", "CBE", "CBD",
+            "BCA", "BCF", "BCE", "BCD", "BBA", "BBF", "BBE", "BBD", "CCC", "CCB", "CBC", "CBB",
+            "BCC", "BCB", "BBC", "BBB"
+        ]
+        .into_iter()
+        .map(|s| s.to_owned())
+        .collect::<Vec<String>>(),
+    ));
 }
