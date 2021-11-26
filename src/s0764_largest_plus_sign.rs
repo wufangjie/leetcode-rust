@@ -1,4 +1,4 @@
-use leetcode_rust::utils::Heap;
+use utils::Heap;
 
 struct Solution;
 
