@@ -12,5 +12,7 @@ mod s0756_pyramid_transition_matrix;
 mod s0757_set_intersection_size_at_least_two;
 
 mod s0762_prime_number_of_set_bits_in_binary_representation;
+mod s0763_partition_labels;
+mod s0764_largest_plus_sign;
 
 fn main() {}
