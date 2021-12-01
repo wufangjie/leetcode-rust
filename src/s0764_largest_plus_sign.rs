@@ -1,4 +1,5 @@
-use utils::Heap;
+use std::collections::BinaryHeap;
+// use utils::Heap;
 
 struct Solution;
 
@@ -7,7 +8,6 @@ impl Solution {
         let mut lo = 0;
         let mut hi = col.len() as i32 - 1;
         while hi >= lo {
-            println!("lo = {}, hi = {}", lo, hi);
             let mid = (lo + hi) >> 1;
             if col[mid as usize] > i {
                 hi = mid - 1; // usize will stackoverflow
@@ -47,7 +47,8 @@ impl Solution {
             cols[pair[1] as usize].push(pair[0]);
         }
 
-        let mut heap = Heap::new();
+        let mut heap = BinaryHeap::new();
+        //let mut heap = Heap::new();
         for i in 1..n - 1 {
             let dv = (i + 1).min(n - i) as i32;
             let mut pre = -1;
@@ -55,20 +56,20 @@ impl Solution {
                 let count = j - pre - 1;
                 if count >= 3 {
                     let d4 = dv.min((count + 1) >> 1);
-                    heap.push((-d4, i, pre + 1, count))
+                    heap.push((d4, i, pre + 1, count))
                 }
                 pre = *j;
             }
             let count = n as i32 - pre - 1;
             if count >= 3 {
                 let d4 = dv.min((count + 1) >> 1);
-                heap.push((-d4, i, pre + 1, count))
+                heap.push((d4, i, pre + 1, count))
             }
         }
 
         let mut ret = 1;
         while let Some((d4, i, lo, count)) = heap.pop() {
-            if -d4 <= ret {
+            if d4 <= ret {
                 return ret;
             }
             let mut j = ret;
