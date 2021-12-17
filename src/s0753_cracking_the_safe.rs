@@ -28,7 +28,8 @@ impl Solution {
             }
             let pre_k = pre as usize * k;
             for i in pre_k..pre_k + k {
-                if visited[i] == 0 { // Euler's path exist!
+                if visited[i] == 0 {
+                    // Euler's path exist!
                     let mut v2 = visited.clone();
                     v2[i] = count + 1;
                     stack.push(((i as u16) % base, count + 1, v2));

@@ -2,9 +2,9 @@ use std::collections::{HashMap, HashSet};
 
 struct Solution;
 
-use crate::dbgt;
 impl Solution {
-    fn get_list(// for way 2
+    fn get_list(
+        // for way 2
         bottom: &String,
         i: usize,
         lst: &mut Vec<char>,

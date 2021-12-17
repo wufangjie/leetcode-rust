@@ -1,5 +1,12 @@
 use utils::dbgt;
 
+mod s0218_the_skyline_problem;
+mod s0307_range_sum_query_mutable;
+mod s0315_count_of_smaller_numbers_after_self;
+mod s0327_count_of_range_sum;
+mod s0493_reverse_pairs;
+mod s0673_number_of_longest_increasing_subsequence;
+mod s0699_falling_squares;
 mod s0704_binary_search;
 // mod s0705_design_hashset;
 // mod s0706_design_hashmap;
