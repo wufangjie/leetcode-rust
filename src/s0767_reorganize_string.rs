@@ -10,24 +10,33 @@ impl Solution {
             let p = count.entry(c).or_insert(0);
             *p += 1;
         }
-        let mut lst: Vec<(char, i32)> = count.into_iter().collect();
-        lst.sort_by(|a, b| b.1.cmp(&a.1));
-        if n == 0 || (n + 1 >> 1) < lst[0].1 as usize {
+
+        let mut max_k = ' ';
+        let mut max_c = 0;
+        for (&k, &c) in count.iter() {
+            if c > max_c {
+                max_c = c;
+                max_k = k;
+            }
+        }
+        if n == 0 || (n + 1 >> 1) < max_c as usize {
             return String::from("");
         }
+
+        count.remove(&max_k);
         let mut res = String::new();
-        let part_n = lst[0].1;
-        for part_i in 0..part_n {
-            res.push(lst[0].0);
+        for part_i in 0..max_c {
+            res.push(max_k);
             let mut left = -1;
-            for i in 1..lst.len() {
-                left += lst[i].1;
+            for (&k, &c) in count.iter() {
+                left += c;
                 if left >= part_i {
-                    res.push(lst[i].0);
-                    left -= part_n;
+                    res.push(k);
+                    left -= max_c;
                 }
             }
         }
+
         res
     }
 }
