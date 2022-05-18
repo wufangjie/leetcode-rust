@@ -26,6 +26,9 @@ use utils::dbgt;
 // mod s0766_toeplitz_matrix;
 
 // mod s0767_reorganize_string;
-mod s0768_max_chunks_to_make_sorted_ii;
+// mod s0768_max_chunks_to_make_sorted_ii;
+
+//mod s0146_lru_cache;
+mod s0460_lfu_cache;
 
 fn main() {}
