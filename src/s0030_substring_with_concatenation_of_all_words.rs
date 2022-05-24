@@ -1,4 +1,4 @@
-use std::collections::{HashMap, VecDeque};
+use std::collections::HashMap; //, VecDeque};
 
 struct Solution;
 
@@ -26,13 +26,13 @@ impl Solution {
 
             while j <= n - w {
                 if count.contains_key(&s[j..j + w]) {
-                    let p = current.entry(&s[j..j + w]).or_insert_with(VecDeque::new);
-                    (*p).push_back(j);
+                    let p = current.entry(&s[j..j + w]).or_insert(0);
+                    *p += 1;
                     meets += 1;
-                    if (*p).len() > *count.get(&s[j..j + w]).unwrap() {
+                    if *p > *count.get(&s[j..j + w]).unwrap() {
                         let mut k = j - (meets - 1) * w;
                         loop {
-                            current.get_mut(&s[k..k + w]).unwrap().pop_front();
+                            *current.get_mut(&s[k..k + w]).unwrap() -= 1;
                             meets -= 1;
                             if s[k..k + w] == s[j..j + w] {
                                 break;
