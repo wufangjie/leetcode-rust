@@ -1,4 +1,4 @@
-use crate::Bisect;
+use utils::Bisect;
 
 struct Solution;
 
