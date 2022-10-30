@@ -2,7 +2,9 @@
 // mod s0030_substring_with_concatenation_of_all_words;
 // mod s0076_minimum_window_substring;
 // mod s0239_sliding_window_maximum;
-mod s0480_sliding_window_median;
+// mod s0480_sliding_window_median;
+
+//mod s0497_random_point_in_non_overlapping_rectangles;
 
 //mod s0146_lru_cache;
 //mod s0460_lfu_cache;
@@ -34,5 +36,10 @@ mod s0480_sliding_window_median;
 
 // mod s0767_reorganize_string;
 // mod s0768_max_chunks_to_make_sorted_ii;
+
+// mod s0778_swim_in_rising_water;
+// mod s0779_k_th_symbol_in_grammar;
+// mod s0780_reaching_points;
+
 
 fn main() {}
