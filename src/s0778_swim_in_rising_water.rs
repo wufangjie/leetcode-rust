@@ -12,33 +12,31 @@ impl Solution {
         }
 
         let mut heap = BinaryHeap::new();
-        let mut used = vec![vec![0u8; n]; n]; // 0: never, 1: met, 2: popped
-        let n_1 = n - 1;
+        let mut used = vec![vec![false; n]; n];
         heap.push((Reverse(grid[0][0]), 0, 0));
+        used[0][0] = true;
+        let n_1 = n - 1;
         let mut res = 0;
 
         while let Some((t, x, y)) = heap.pop() {
-            if used[x][y] != 2 {
-                used[x][y] = 2;
-                if t.0 > res {
-                    res = t.0;
-                }
-                if x == n_1 && y == n_1 {
-                    return res;
-                }
+            if t.0 > res {
+                res = t.0;
+            }
+            if x == n_1 && y == n_1 {
+                return res;
+            }
 
-                if x > 0 && used[x - 1][y] == 0 {
-                    Self::memo_push(&mut heap, &grid, &mut used, x - 1, y);
-                }
-                if x < n_1 && used[x + 1][y] == 0 {
-                    Self::memo_push(&mut heap, &grid, &mut used, x + 1, y);
-                }
-                if y > 0 && used[x][y - 1] == 0 {
-                    Self::memo_push(&mut heap, &grid, &mut used, x, y - 1);
-                }
-                if y < n_1 && used[x][y + 1] == 0 {
-                    Self::memo_push(&mut heap, &grid, &mut used, x, y + 1);
-                }
+            if x > 0 && !used[x - 1][y] {
+                Self::memo_push(&mut heap, &grid, &mut used, x - 1, y);
+            }
+            if x < n_1 && !used[x + 1][y] {
+                Self::memo_push(&mut heap, &grid, &mut used, x + 1, y);
+            }
+            if y > 0 && !used[x][y - 1] {
+                Self::memo_push(&mut heap, &grid, &mut used, x, y - 1);
+            }
+            if y < n_1 && !used[x][y + 1] {
+                Self::memo_push(&mut heap, &grid, &mut used, x, y + 1);
             }
         }
         unreachable!();
@@ -48,12 +46,12 @@ impl Solution {
     fn memo_push(
         heap: &mut BinaryHeap<(Reverse<i32>, usize, usize)>,
         grid: &[Vec<i32>],
-        used: &mut [Vec<u8>],
+        used: &mut [Vec<bool>],
         x: usize,
         y: usize,
     ) {
         heap.push((Reverse(grid[x][y]), x, y));
-        used[x][y] = 1;
+        used[x][y] = true;
     }
 }
 
