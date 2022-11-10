@@ -4,6 +4,8 @@
 // mod s0239_sliding_window_maximum;
 // mod s0480_sliding_window_median;
 
+// mod s0445_add_two_numbers_ii;
+
 //mod s0497_random_point_in_non_overlapping_rectangles;
 
 //mod s0146_lru_cache;
@@ -40,6 +42,25 @@
 // mod s0778_swim_in_rising_water;
 // mod s0779_k_th_symbol_in_grammar;
 // mod s0780_reaching_points;
+// mod s0781_rabbits_in_forest;
 
 
-fn main() {}
+fn main() {
+
+
+    // utils::dbgt!(&*b);
+
+    // let a = 5;
+    // let b = 42;
+
+    // assert!(&&a < &&b);
+
+    // let lst = vec!["hello"];
+
+    // #[allow(clippy::needless_borrow)]
+    // for item in (&&&lst).iter() {
+    //     // seems silly, deref coercion?
+    //     utils::dbgt!(&item);
+    // }
+
+}
