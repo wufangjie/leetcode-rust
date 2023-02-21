@@ -1,4 +1,7 @@
 // mod s0003_longest_substring_without_repeating_characters;
+// mod s0004_median_of_two_sorted_arrays;
+
+// mod s0023_merge_k_sorted_lists;
 // mod s0030_substring_with_concatenation_of_all_words;
 // mod s0076_minimum_window_substring;
 // mod s0239_sliding_window_maximum;
@@ -18,9 +21,15 @@
 // mod s0493_reverse_pairs;
 // mod s0673_number_of_longest_increasing_subsequence;
 // mod s0699_falling_squares;
+
+/// I wrote them directly on the web, so no test cases
+// mod s0700_search_in_a_binary_search_tree;
+// mod s0701_insert_into_a_binary_search_tree;
+// mod s0703_kth_largest_element_in_a_stream;
 // mod s0704_binary_search;
-// // mod s0705_design_hashset;
-// // mod s0706_design_hashmap;
+// mod s0705_design_hashset;
+// mod s0706_design_hashmap;
+// mod s0707_design_linked_list;
 
 // mod s0749_contain_virus;
 // mod s0752_open_the_lock;
@@ -44,9 +53,7 @@
 // mod s0780_reaching_points;
 // mod s0781_rabbits_in_forest;
 
-
 fn main() {
-
 
     // utils::dbgt!(&*b);
 
@@ -62,5 +69,4 @@ fn main() {
     //     // seems silly, deref coercion?
     //     utils::dbgt!(&item);
     // }
-
 }
