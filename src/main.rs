@@ -8,7 +8,7 @@
 // mod s0480_sliding_window_median;
 
 // mod s0445_add_two_numbers_ii;
-
+// mod s0470_implement_rand10_using_rand7;
 //mod s0497_random_point_in_non_overlapping_rectangles;
 
 //mod s0146_lru_cache;
@@ -30,6 +30,8 @@
 // mod s0705_design_hashset;
 // mod s0706_design_hashmap;
 // mod s0707_design_linked_list;
+
+// mod s0710_random_pick_with_blacklist;
 
 // mod s0749_contain_virus;
 // mod s0752_open_the_lock;
@@ -54,19 +56,4 @@
 // mod s0781_rabbits_in_forest;
 
 fn main() {
-
-    // utils::dbgt!(&*b);
-
-    // let a = 5;
-    // let b = 42;
-
-    // assert!(&&a < &&b);
-
-    // let lst = vec!["hello"];
-
-    // #[allow(clippy::needless_borrow)]
-    // for item in (&&&lst).iter() {
-    //     // seems silly, deref coercion?
-    //     utils::dbgt!(&item);
-    // }
 }
