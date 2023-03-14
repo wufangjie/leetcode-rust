@@ -18,7 +18,13 @@
 // mod s0307_range_sum_query_mutable;
 // mod s0315_count_of_smaller_numbers_after_self;
 // mod s0327_count_of_range_sum;
+// mod s0478_generate_random_point_in_a_circle;
 // mod s0493_reverse_pairs;
+// mod s0509_fibonacci_number;
+// mod s0519_random_flip_matrix;
+// mod s0528_random_pick_with_weight;
+// mod s0622_design_circular_queue;
+// mode s0641_design_circular_deque;
 // mod s0673_number_of_longest_increasing_subsequence;
 // mod s0699_falling_squares;
 
@@ -54,6 +60,13 @@
 // mod s0779_k_th_symbol_in_grammar;
 // mod s0780_reaching_points;
 // mod s0781_rabbits_in_forest;
+// mod s0782_transform_to_chessboard;
+// mod s0783_minimum_distance_between_bst_nodes;
+// mod s0784_letter_case_permutation;
+// mod s0785_is_graph_bipartite;
+// mod s0786_kth_smallest_prime_fraction;
+// mod s0787_cheapest_flights_within_k_stops;
+// mod s0788_rotated_digits;
+// mod s0789_escape_the_ghosts;
 
-fn main() {
-}
+fn main() {}
