@@ -8,6 +8,17 @@ const TABLE: [&str; 26] = [
     "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--..",
 ];
 
+// impl Solution {
+//     pub fn unique_morse_representations(words: Vec<String>) -> i32 {
+//         HashSet::<String>::from_iter(
+//             words
+//                 .into_iter()
+//                 .map(|word| String::from_iter(word.bytes().map(|c| TABLE[(c - b'a') as usize]))),
+//         )
+//         .len() as i32
+//     }
+// }
+
 impl Solution {
     pub fn unique_morse_representations(words: Vec<String>) -> i32 {
         HashSet::<String>::from_iter(words.into_iter().map(|word| {
