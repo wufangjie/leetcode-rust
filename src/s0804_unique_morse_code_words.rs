@@ -1,5 +1,5 @@
 use std::collections::HashSet;
-use std::iter::FromIterator; // prelude since rust_2021
+// use std::iter::FromIterator; // prelude since rust_2021
 
 struct Solution;
 
@@ -21,15 +21,19 @@ const TABLE: [&str; 26] = [
 
 impl Solution {
     pub fn unique_morse_representations(words: Vec<String>) -> i32 {
-        HashSet::<String>::from_iter(words.into_iter().map(|word| {
-            word.bytes()
-                .map(|c| TABLE[(c - b'a') as usize])
-                .fold(String::new(), |mut acc, x| {
-                    acc.push_str(x);
-                    acc
-                })
-        }))
-        .len() as i32
+        words
+            .into_iter()
+            .map(|word| {
+                word.bytes().map(|c| TABLE[(c - b'a') as usize]).fold(
+                    String::new(),
+                    |mut acc, x| {
+                        acc.push_str(x);
+                        acc
+                    },
+                )
+            })
+            .collect::<HashSet<String>>()
+            .len() as i32
     }
 }
 
