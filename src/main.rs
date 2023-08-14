@@ -9,10 +9,10 @@
 
 // mod s0445_add_two_numbers_ii;
 // mod s0470_implement_rand10_using_rand7;
-//mod s0497_random_point_in_non_overlapping_rectangles;
+// mod s0497_random_point_in_non_overlapping_rectangles;
 
-//mod s0146_lru_cache;
-//mod s0460_lfu_cache;
+// mod s0146_lru_cache;
+// mod s0460_lfu_cache;
 
 // mod s0218_the_skyline_problem;
 // mod s0307_range_sum_query_mutable;
@@ -24,11 +24,9 @@
 // mod s0519_random_flip_matrix;
 // mod s0528_random_pick_with_weight;
 // mod s0622_design_circular_queue;
-// mode s0641_design_circular_deque;
+// mod s0641_design_circular_deque;
 // mod s0673_number_of_longest_increasing_subsequence;
 // mod s0699_falling_squares;
-
-/// I wrote them directly on the web, so no test cases
 // mod s0700_search_in_a_binary_search_tree;
 // mod s0701_insert_into_a_binary_search_tree;
 // mod s0703_kth_largest_element_in_a_stream;
@@ -36,7 +34,6 @@
 // mod s0705_design_hashset;
 // mod s0706_design_hashmap;
 // mod s0707_design_linked_list;
-
 // mod s0710_random_pick_with_blacklist;
 
 // mod s0749_contain_virus;
@@ -49,13 +46,17 @@
 // mod s0762_prime_number_of_set_bits_in_binary_representation;
 // mod s0763_partition_labels;
 // mod s0764_largest_plus_sign;
-
 // mod s0765_couples_holding_hands;
 // mod s0766_toeplitz_matrix;
-
 // mod s0767_reorganize_string;
 // mod s0768_max_chunks_to_make_sorted_ii;
+// mod s0769_max_chunks_to_make_sorted;
 
+// mod s0771_jewels_and_stones;
+// mod s0773_sliding_puzzle;
+// mod s0775_global_and_local_inversions;
+
+// mod s0777_swap_adjacent_in_lr_string;
 // mod s0778_swim_in_rising_water;
 // mod s0779_k_th_symbol_in_grammar;
 // mod s0780_reaching_points;
@@ -78,5 +79,16 @@
 // mod s0797_all_paths_from_source_to_target;
 // mod s0798_smallest_rotation_with_highest_score;
 // mod s0799_champagne_tower;
+
+// mod s0801_minimum_swaps_to_make_sequences_increasing;
+// mod s0802_find_eventual_safe_states;
+// mod s0803_bricks_falling_when_hit;
+// mod s0804_unique_morse_code_words;
+// mod s0805_split_array_with_same_average;
+// mod s0806_number_of_lines_to_write_string;
+// mod s0807_max_increase_to_keep_city_skyline;
+// mod s0808_soup_servings;
+// mod s0809_expressive_words;
+mod s0810_chalkboard_xor_game;
 
 fn main() {}
